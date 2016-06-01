@@ -17,40 +17,57 @@
 })((this || 0).self || global, function(global) {
   "use strict";
 
-  function startWebAudio(audioContext, elem, callback) {
-    if (typeof elem === "function") {
-      callback = elem;
-      elem = null;
+  function startWebAudio(audioContext) {
+    var args = [].slice.call(arguments, 1);
+    var elem = null;
+    var requireUserAction = false;
+    var callback = null;
+
+    if (args[0] && typeof args[0].addEventListener === "function") {
+      elem = args.shift();
+    }
+    if (typeof args[0] !== "undefined" && typeof args[0] !== "function") {
+      requireUserAction = !!args.shift();
+    }
+    if (typeof args[0] === "function") {
+      callback = args.shift();
     }
     if (typeof callback !== "function") {
       callback = function() { /* noop */ };
     }
 
-    var ua = global.navigator ? global.navigator.userAgent : "";
+    elem = elem || global;
 
-    if (!/iPhone|iPad|iPod/.test(ua)) {
+    var ua = global.navigator ? global.navigator.userAgent : "";
+    var touchEventIsEnabled = ("ontouchstart" in elem);
+
+    if (!requireUserAction && !/iPhone|iPad|iPod/.test(ua)) {
       startWebAudio.done = true;
       setTimeout(callback, 0);
       return;
     }
 
-    elem = elem || global;
-
     function chore(e) {
       if (!startWebAudio.done) {
         play(audioContext, function() {
           startWebAudio.done = true;
-          elem.removeEventListener("touchstart", chore, true);
-          elem.removeEventListener("touchend", chore, true);
-          elem.removeEventListener("click", chore, true);
+          if (touchEventIsEnabled) {
+            elem.removeEventListener("touchstart", chore, true);
+            elem.removeEventListener("touchend", chore, true);
+          } else {
+            elem.removeEventListener("mousedown", chore, true);
+          }
           callback();
         });
       }
     }
 
-    elem.addEventListener("touchstart", chore, true);
-    elem.addEventListener("touchend", chore, true);
-    elem.addEventListener("click", chore, true);
+    if (touchEventIsEnabled) {
+      elem.addEventListener("touchstart", chore, true);
+      elem.addEventListener("touchend", chore, true);
+    } else {
+      elem.addEventListener("mousedown", chore, true);
+    }
   };
 
   var memo = [];
