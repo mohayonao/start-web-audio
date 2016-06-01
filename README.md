@@ -15,11 +15,14 @@ downloads:
 - [start-web-audio.js](https://raw.githubusercontent.com/mohayonao/start-web-audio/master/index.js)
 
 ## API
-- `startWebAudio(audioContext, [ elem, callback ]): void`
+- `startWebAudio(audioContext, [ elem, requireUserAction, callback ]): void`
   - attach event listeners to `elem` for starting Web Audio API
   - `audioContext: AudioContext`
   - `elem: EventTarget`
     - a target of event listener - _default: **window**_
+  - `requireUserAction: boolean`
+    - require user action  - _default: **false**_
+    - this option is useful, when want to use the same workflow in all devices.
   - `callback: function`
     - called when Web Audio API has been started - _default: noop_
 
