@@ -14,7 +14,7 @@
     global.startWebAudio = factory(global);
   }
 
-})(this, function(global) {
+})((this || 0).self || global, function(global) {
   "use strict";
 
   function startWebAudio(audioContext, elem, callback) {
@@ -37,7 +37,7 @@
     elem = elem || global;
 
     function chore(e) {
-      if (!done) {
+      if (!startWebAudio.done) {
         play(audioContext, function() {
           startWebAudio.done = true;
           elem.removeEventListener("touchstart", chore, true);
