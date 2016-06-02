@@ -1,7 +1,7 @@
 {
   "name": "start-web-audio",
   "description": "chore function for starting web audio in mobile Safari",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/start-web-audio/issues"
