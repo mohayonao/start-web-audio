@@ -12,7 +12,8 @@ npm install start-web-audio
 
 downloads:
 
-- [start-web-audio.js](https://raw.githubusercontent.com/mohayonao/start-web-audio/master/index.js)
+- [start-web-audio.js](https://raw.githubusercontent.com/mohayonao/start-web-audio/master/build/start-web-audio.js)
+- [start-web-audio.min.js](https://raw.githubusercontent.com/mohayonao/start-web-audio/master/build/start-web-audio.min.js)
 
 ## API
 - `startWebAudio(audioContext, [ elem, requireUserAction, callback ]): void`
