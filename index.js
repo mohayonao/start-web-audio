@@ -4,7 +4,7 @@
   if (typeof define === "function" && define.amd) {
     // AMD
     define([], function() {
-      factory(global);
+      return factory(global);
     });
   } else if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // CommonJS
