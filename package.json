@@ -6,6 +6,10 @@
   "bugs": {
     "url": "https://github.com/mohayonao/start-web-audio/issues"
   },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "uglify-js": "^2.6.2"
+  },
   "files": [
     "index.js",
     "package.json",
@@ -22,6 +26,11 @@
     "url": "http://github.com/mohayonao/start-web-audio.git"
   },
   "scripts": {
-    "postversion": "git push && git push --tags"
+    "build": "npm run build-browser && npm run build-minify",
+    "build-browser": "browserify index.js --standalone startWebAudio -o build/start-web-audio.js",
+    "build-minify": "uglifyjs build/start-web-audio.js -o build/start-web-audio.min.js",
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm run build",
+    "version": "npm run build && git add -A build"
   }
 }
